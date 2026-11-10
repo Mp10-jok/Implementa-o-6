@@ -28,4 +28,20 @@ Makefile:11: warning: ignoring old commands for target `clean'
 make: Nothing to be done for `all'.
 [1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004h[7m./banker 10 5 7[27m[15D[27m.[27m/[27mb[27ma[27mn[27mk[27me[27mr[27m [27m1[27m0[27m [27m5[27m [27m7[?2004l
 Deu certo!! Recebi 3 argumentos
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004h[7m./banker 10 5 7[27m[15D[27m.[27m/[27mb[27ma[27mn[27mk[27me[27mr[27m [27m1[27m0[27m [27m5[27m [27m7 7 a 7b 7c 7[1C[1C[?2004l
+Deu certo!! Recebi 3 argumentos
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004h../banker[?2004l
+Deu certo!! Recebi 0 argumentos
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004hmmaximun[?2004l
+zsh: command not found: maximun
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004hmmake maximun m[?2004l
+Makefile:18: warning: overriding commands for target `banker'
+Makefile:8: warning: ignoring old commands for target `banker'
+Makefile:21: warning: overriding commands for target `clean'
+Makefile:11: warning: ignoring old commands for target `clean'
+make: *** No rule to make target `maximum'.  Stop.
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004hmmaximum[?2004l
+zsh: command not found: maximum
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004h[7m./banker 10 5[27m[13D[27m.[27m/[27mb[27ma[27mn[27mk[27me[27mr[27m [27m1[27m0[27m [27m5[?2004l
+Deu certo!! Recebi 2 argumentos
 [1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004h
