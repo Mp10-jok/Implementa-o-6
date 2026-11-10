@@ -1,0 +1,31 @@
+Script started on Tue Nov 10 17:06:26 2026
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004hmmkm make[?2004l
+make: *** No rule to make target `banker.c', needed by `banker'.  Stop.
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004hmmake clean[?2004l
+rm -f banker *.o result.txt
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004hmmake[?2004l
+Makefile:18: warning: overriding commands for target `banker'
+Makefile:8: warning: ignoring old commands for target `banker'
+Makefile:21: warning: overriding commands for target `clean'
+Makefile:11: warning: ignoring old commands for target `clean'
+gcc -Wall -Wextra -o banker banker.c
+[1mbanker.c:5:26: [0m[0;1;35mwarning: [0m[1munused parameter 'argv' [-Wunused-parameter][0m
+    5 | [0;34mint[0m main([0;34mint[0m argc, [0;34mchar[0m *argv[]){[0m
+      | [0;1;32m                         ^
+[0m1 warning generated.
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004hmmake banker      .\ /banker 10 5 7[?2004l
+Makefile:18: warning: overriding commands for target `banker'
+Makefile:8: warning: ignoring old commands for target `banker'
+Makefile:21: warning: overriding commands for target `clean'
+Makefile:11: warning: ignoring old commands for target `clean'
+make: `banker' is up to date.
+make: *** No rule to make target `10'.  Stop.
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004hmmake[?2004l
+Makefile:18: warning: overriding commands for target `banker'
+Makefile:8: warning: ignoring old commands for target `banker'
+Makefile:21: warning: overriding commands for target `clean'
+Makefile:11: warning: ignoring old commands for target `clean'
+make: Nothing to be done for `all'.
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004h[7m./banker 10 5 7[27m[15D[27m.[27m/[27mb[27ma[27mn[27mk[27me[27mr[27m [27m1[27m0[27m [27m5[27m [27m7[?2004l
+Deu certo!! Recebi 3 argumentos
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004h
