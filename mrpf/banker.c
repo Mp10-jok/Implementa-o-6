@@ -236,6 +236,25 @@ static void request_resources(int c, const int *req){
     fprintf(result, "\n");
 }
 
+static void release_resources(int c, const int *rel) {
+    for (int j = 0; j < n_resources; j++) {
+        if (rel[j] > allocation[c][j]) {
+            fprintf(result, "A liberação %d do cliente ", c);
+            fprint_vec(result, rel);
+            fprintf(result, " foi negado porque excedeu sua alocação\n");
+            return;
+        }
+    }
+    for (int j = 0; j < n_resources; j++) {
+        available[j] += rel[j];
+        allocation[c][j] -= rel[j];
+        need[c][j] += rel[j];
+    }
+    fprintf(result, "O cliente %d teve seus recursos liberados ", c);
+    fprint_vec(result, rel);
+    fprintf(result, "\n");
+}
+
 int main(int argc, char *argv[]){
     printf("Deu certo!! Recebi %d argumentos\n", argc - 1);
     return 0;
