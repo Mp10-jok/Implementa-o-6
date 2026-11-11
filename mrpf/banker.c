@@ -236,16 +236,16 @@ static void request_resources(int c, const int *req){
     fprintf(result, "\n");
 }
 
-static void release_resources(int c, const int *rel) {
-    for (int j = 0; j < n_resources; j++) {
-        if (rel[j] > allocation[c][j]) {
+static void release_resources(int c, const int *rel){
+    for(int j = 0; j < n_resources; j++){
+        if(rel[j] > allocation[c][j]){
             fprintf(result, "A liberação %d do cliente ", c);
             fprint_vec(result, rel);
             fprintf(result, " foi negado porque excedeu sua alocação\n");
             return;
         }
     }
-    for (int j = 0; j < n_resources; j++) {
+    for(int j = 0; j < n_resources; j++){
         available[j] += rel[j];
         allocation[c][j] -= rel[j];
         need[c][j] += rel[j];
@@ -255,7 +255,61 @@ static void release_resources(int c, const int *rel) {
     fprintf(result, "\n");
 }
 
+static void print_state(void){
+    fprintf(result, "MAXIMUM | ALLOCATION | NEED\n");
+    for(int i = 0; i < n_customers; i++){
+        fprint_vec(result, maximum[i]);
+        fprintf(result, " | ");
+        fprint_vec(result, allocation[i]);
+        fprintf(result, " | ");
+        fprint_vec(result, need[i]);
+        fprintf(result, "\n");
+    }
+    fprintf(result, "AVAILABLE ");
+    fprint_vec(result, available);
+    fprintf(result, "\n");
+}
+
 int main(int argc, char *argv[]){
-    printf("Deu certo!! Recebi %d argumentos\n", argc - 1);
-    return 0;
+    atexit(cleanup);
+
+    if (argc < 2){
+        fatal("Uso: %s <instâncias do recurso 0> <instâncias do recurso 1> ...", argv[0]);
+    }
+    
+    n_resources = argc - 1;
+    available = xmalloc((size_t)n_resources * sizeof(int));
+    
+    for(int j = 0; j < n_resources; j++){
+        if(!parse_nonneg_int(argv[j + 1], &available[j])){
+            fatal("Argumento inválido '%s' (esperado: inteiro não negativo)", argv[j + 1]);
+        }      
+    }
+    
+    load_customers();
+    load_commands();
+
+    allocation = xmalloc((size_t)n_customers * sizeof(int *));
+    need = xmalloc((size_t)n_customers * sizeof(int *));
+    for(int i = 0; i < n_customers; i++){
+        allocation[i] = xmalloc((size_t)n_resources * sizeof(int));
+        need[i] = xmalloc((size_t)n_resources * sizeof(int));
+        memcpy(need[i], maximum[i], (size_t)n_resources * sizeof(int));
+    }
+
+    result = fopen(RESULT_FILE, "w");
+    if(!result){
+        fatal("Não foi possível criar o arquivo %s: %s", RESULT_FILE, strerror(errno));
+    }
+
+    for(int k = 0; k < n_commands; k++){
+        Command *cmd = &commands[k];
+        switch (cmd->type){
+            case CMD_RQ:request_resources(cmd->customer, cmd->values); break;
+            case CMD_RL:release_resources(cmd->customer, cmd->values); break;
+            case CMD_PRINT:print_state(); break;
+        }
+    }
+
+    return EXIT_SUCCESS;
 }
