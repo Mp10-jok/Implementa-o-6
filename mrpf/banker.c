@@ -19,9 +19,13 @@ typedef struct {
 
 static int n_resources = 0;
 static int n_customers = 0;
+static int *available = NULL;
 static int **maximun = NULL;
+static int **allocation = NULL;
+static int **need = NULL;
 static Command *commands = NULL;
 static int n_commands = 0;
+static FILE *result = NULL;
 
 static int read_line(FILE *f, char *buf, const char *fname, int line_no){
     if(!fgets(buf, LINE_BUF, f)) return 0;
@@ -36,7 +40,7 @@ static void fprintf_vec(FILE *f, const int *v){
     }
 }
 
-static void ler_customers(void){
+static void load_customers(void){
     FILE *f = fopen(CUSTOMER_FILE, "r");
     if(!f) fatal("Não foi possível abrir o arquivo %s: %s\n", CUSTOMER_FILE, strerror(errno));
 
@@ -144,6 +148,49 @@ static void load_commands(void){
         commands[n_commands++] = cmd;
     }
     fclose(f);
+}
+
+static int is_safe(void) {
+    int *work = xmalloc((size_t)n_resources * sizeof(int));
+    int *finish = xmalloc((size_t)n_customers * sizeof(int));
+    memcpy(work, available, (size_t)n_resources * sizeof(int));
+
+    int progress = 1;
+    while(progress){
+        progress = 0;
+        for(int i = 0; i < n_customers; i++){
+            if(finish[i]) continue;
+            
+            int ok = 1;
+            
+            for(int j = 0; j < n_resources; j++){
+                if(need[i][j] > work[j]){
+                    ok = 0; 
+                    break; 
+                }
+            }
+
+            if(ok){
+                for(int j = 0; j < n_resources; j++){
+                    work[j] += allocation[i][j];
+                } 
+                finish[i] = 1;
+                progress = 1;
+            }
+        }
+    }
+
+    int safe = 1;
+    for (int i = 0; i < n_customers; i++){
+        if (!finish[i]){
+            safe = 0; 
+            break;
+        } 
+    }
+        
+    free(work);
+    free(finish);
+    return safe;
 }
 
 int main(int argc, char *argv[]){
