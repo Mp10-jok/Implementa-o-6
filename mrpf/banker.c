@@ -193,6 +193,49 @@ static int is_safe(void) {
     return safe;
 }
 
+static void request_resources(int c, const int *req){
+    for(int j = 0; j < n_resources; j++){
+        if(req[j] > need[c][j]){
+            fprintf(result, "O pedido %d do cliente ", c);
+            fprint_vec(result, req);
+            fprintf(result, " foi negado porque excede sua alocação máxima\n");
+            return;
+        }
+    }
+    for(int j = 0; j < n_resources; j++){
+        if(req[j] > available[j]){
+            fprintf(result, "Os recursos ");
+            fprint_vec(result, available);
+            fprintf(result, " não são suficientes para a solicitação %d do cliente ", c);
+            fprint_vec(result, req);
+            fprintf(result, "\n");
+            return;
+        }
+    }
+
+    for(int j = 0; j < n_resources; j++){
+        available[j] -= req[j];
+        allocation[c][j] += req[j];
+        need[c][j] -= req[j];
+    }
+
+    if(!is_safe()){
+        for(int j = 0; j < n_resources; j++){
+            available[j] += req[j];
+            allocation[c][j] -= req[j];
+            need[c][j] += req[j];
+        }
+        fprintf(result, "O pedido %d do cliente ", c);
+        fprint_vec(result, req);
+        fprintf(result, " foi negado porque resulta em um estado inseguro\n");
+        return;
+    }
+
+    fprintf(result, "Alocar ao cliente %d os recursos ", c);
+    fprint_vec(result, req);
+    fprintf(result, "\n");
+}
+
 int main(int argc, char *argv[]){
     printf("Deu certo!! Recebi %d argumentos\n", argc - 1);
     return 0;
