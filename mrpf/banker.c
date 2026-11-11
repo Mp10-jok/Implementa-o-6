@@ -1,15 +1,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
+#include <errno.h>
 
 #define CUSTOMER_FILE "customer.txt"
 #define COMMANDS_FILE "commands.txt"
 #define RESULT_FILE "result.txt"
 #define LINE_BUF 4096
 
+typedef enum { CMD_RQ, CMD_RL, CMD_PRINT } CommandType; 
+
+typedef struct {
+    CommandType type;   
+    int customer;      
+    int *values;        
+} Command;
+
 static int n_resources = 0;
 static int n_customers = 0;
 static int **maximun = NULL;
+static Command *commands = NULL;
+static int n_commands = 0;
 
 static int read_line(FILE *f, char *buf, const char *fname, int line_no){
     if(!fgets(buf, LINE_BUF, f)) return 0;
@@ -65,9 +77,73 @@ static void ler_customers(void){
         }
     }
     fclose(f);
-    if(n_customers){
+    if(n_customers == 0){
         fatal("O arquivo %s não tem clientes", CUSTOMER_FILE);
     }
+}
+
+static void load_commands(void){
+    FILE *f = fopen(COMMANDS_FILE, "r");
+    if(!f){
+        fatal("Não foi possível abrir o arquivo %s: %s\n", COMMANDS_FILE, strerror(errno));
+    }
+    char buf[LINE_BUF];
+    int line_no = 0, cap = 0;
+
+    while(read_line(f, buf, COMMANDS_FILE, line_no + 1)){
+        line_no++;
+        char *line = trim(buf);
+        if(*line == '\0') continue;
+
+        char *tokens[LINE_BUF / 2] = {0};
+        int nt = 0;
+        for(char *t = strtok(line, "\t"); t; t = strtok(NULL, "\t")){
+            tokens[nt++] = t;
+        }
+
+        Command cmd = {0};
+        if(strcmp(tokens[0], "*") == 0){
+            if(nt != 1){
+                fclose(f);
+                fatal("Linha %d do %s: o comando '*' não recebe argumentos\n", line_no, COMMANDS_FILE);
+            }
+            cmd.type = CMD_PRINT;
+        }
+        else if(strcmp(tokens[0], "RQ") == 0 || strcmp(tokens[0], "RL") == 0){
+            cmd.type = (tokens[0][1] == 'Q') ? CMD_RQ : CMD_RL;
+            if(nt - 2 != n_resources){
+                fclose(f);
+                fatal("A linha %d do %s tem %d recursos, mas foram passados %d argumentos\n", line_no, COMMANDS_FILE, nt - 2 < 0 ? 0 : nt - 2, n_resources);
+            }
+
+            if (!parse_nonneg_int(tokens[1], &cmd.customer)){
+                fclose(f);
+                fatal("Linha %d do %s: número de cliente inválido '%s'", line_no, COMMANDS_FILE, tokens[1]);
+            }
+
+            if (cmd.customer >= n_customers) {
+                fclose(f);
+                fatal("Linha %d do %s: o cliente %d não existe (validos: 0 a %d)", line_no, COMMANDS_FILE, cmd.customer, n_customers - 1);
+            }
+            cmd.values = xmalloc((size_t)n_resources * sizeof(int));
+            for (int j = 0; j < n_resources; j++){
+                if (!parse_nonneg_int(tokens[j + 2], &cmd.values[j])) {
+                    free(cmd.values);
+                    fclose(f);
+                    fatal("Linha %d do %s: valor de recurso inválido '%s'",line_no, COMMANDS_FILE, tokens[j + 2]);
+                }
+            }
+        } else {
+            fclose(f);
+            fatal("linha %d do %s: comando desconhecido '%s' (esperado: RQ, RL ou *)",line_no, COMMANDS_FILE, tokens[0]);
+        }
+        if (n_commands == cap) {
+            cap = cap ? cap * 2 : 16;
+            commands = xrealloc(commands, (size_t)cap * sizeof(Command));
+        }
+        commands[n_commands++] = cmd;
+    }
+    fclose(f);
 }
 
 int main(int argc, char *argv[]){

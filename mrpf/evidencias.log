@@ -1,47 +1,382 @@
-Script started on Tue Nov 10 17:06:26 2026
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004hmmkm make[?2004l
-make: *** No rule to make target `banker.c', needed by `banker'.  Stop.
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004hmmake clean[?2004l
-rm -f banker *.o result.txt
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004hmmake[?2004l
+Script started on Wed Nov 11 10:47:09 2026
+[1m[7m%[27m[1m[0m                                                                                                         [0m[27m[24m[Jmarciorperez@MacBook-Air-de-Marcio mrpf % [K[?2004h[7mmake[27m
+[7m./banker 10 5 7[27m[K[A[27C[27mm[27ma[27mk[27me[1B[27m.[27m/[27mb[27ma[27mn[27mk[27me[27mr[27m [27m1[27m0[27m [27m5[27m [27m7[?2004l
 Makefile:18: warning: overriding commands for target `banker'
 Makefile:8: warning: ignoring old commands for target `banker'
 Makefile:21: warning: overriding commands for target `clean'
 Makefile:11: warning: ignoring old commands for target `clean'
 gcc -Wall -Wextra -o banker banker.c
-[1mbanker.c:5:26: [0m[0;1;35mwarning: [0m[1munused parameter 'argv' [-Wunused-parameter][0m
-    5 | [0;34mint[0m main([0;34mint[0m argc, [0;34mchar[0m *argv[]){[0m
+[1mbanker.c:29:65: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   29 |     [0;34mif[0m(len == LINE_BUF - [0;32m1[0m && buf[len - [0;32m1[0m] != [0;32m'\n'[0m && !feof(f)) fatal([0;32m"A linha %d do arquivo %s é muito longa\n"[0m, line_no, fname);[0m
+      | [0;1;32m                                                                ^
+[0m[1mbanker.c:41:12: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   41 |     [0;34mif[0m(!f) fatal([0;32m"Não foi possível abrir o arquivo %s: %s\n"[0m, CUSTOMER_FILE, strerror(errno));[0m
+      | [0;1;32m           ^
+[0m[1mbanker.c:48:22: [0m[0;1;31merror: [0m[1mcall to undeclared function 'trim'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   48 |         [0;34mchar[0m *line = trim(buf);[0m
+      | [0;1;32m                     ^
+[0m[1mbanker.c:48:15: [0m[0;1;31merror: [0m[1mincompatible integer to pointer conversion initializing 'char *' with an expression of type 'int' [-Wint-conversion][0m
+   48 |         [0;34mchar[0m *line = trim(buf);[0m
+      | [0;1;32m              ^      ~~~~~~~~~
+[0m[1mbanker.c:61:23: [0m[0;1;31merror: [0m[1mcall to undeclared function 'xrealloc'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   61 |             maximun = xrealloc(maximun, (size_t)cap * [0;34msizeof[0m([0;34mint[0m *));[0m
+      | [0;1;32m                      ^
+[0m[1mbanker.c:61:23: [0m[0;1;36mnote: [0mdid you mean 'realloc'?[0m
+[1m/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/malloc/_malloc.h:57:35: [0m[0;1;36mnote: [0m'realloc' declared here[0m
+   57 | [0;34mvoid[0m * __sized_by_or_null(__size) realloc([0;34mvoid[0m * __unsafe_indexable __ptr, size_t __size) __result_use_check __alloc_size([0;32m2[0m) _MALLOC_TYPED(malloc_type_realloc, [0;32m2[0m);[0m
+      | [0;1;32m                                  ^
+[0m[1mbanker.c:61:21: [0m[0;1;31merror: [0m[1mincompatible integer to pointer conversion assigning to 'int **' from 'int' [-Wint-conversion][0m
+   61 |             maximun = xrealloc(maximun, (size_t)cap * [0;34msizeof[0m([0;34mint[0m *));[0m
+      | [0;1;32m                    ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m[1mbanker.c:63:20: [0m[0;1;31merror: [0m[1mcall to undeclared function 'xmalloc'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   63 |         [0;34mint[0m *row = xmalloc((size_t)n_resources * [0;34msizeof[0m([0;34mint[0m));[0m
+      | [0;1;32m                   ^
+[0m[1mbanker.c:63:20: [0m[0;1;36mnote: [0mdid you mean 'malloc'?[0m
+[1m/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/malloc/_malloc.h:54:35: [0m[0;1;36mnote: [0m'malloc' declared here[0m
+   54 | [0;34mvoid[0m * __sized_by_or_null(__size) malloc(size_t __size) __result_use_check __alloc_size([0;32m1[0m) _MALLOC_TYPED(malloc_type_malloc, [0;32m1[0m);[0m
+      | [0;1;32m                                  ^
+[0m[1mbanker.c:63:14: [0m[0;1;31merror: [0m[1mincompatible integer to pointer conversion initializing 'int *' with an expression of type 'int' [-Wint-conversion][0m
+   63 |         [0;34mint[0m *row = xmalloc((size_t)n_resources * [0;34msizeof[0m([0;34mint[0m));[0m
+      | [0;1;32m             ^     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m[1mbanker.c:71:19: [0m[0;1;31merror: [0m[1mincompatible integer to pointer conversion initializing 'char *' with an expression of type 'int' [-Wint-conversion][0m
+   71 |             [0;34mchar[0m *field = trim(tok);[0m
+      | [0;1;32m                  ^       ~~~~~~~~~
+[0m[1mbanker.c:72:17: [0m[0;1;31merror: [0m[1mcall to undeclared function 'parse_nonneg_int'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   72 |             [0;34mif[0m(!parse_nonneg_int(field, &row[j])){[0m
+      | [0;1;32m                ^
+[0m[1mbanker.c:88:9: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   88 |         fatal([0;32m"Não foi possível abrir o arquivo %s: %s\n"[0m, COMMANDS_FILE, strerror(errno));[0m
+      | [0;1;32m        ^
+[0m[1mbanker.c:95:22: [0m[0;1;31merror: [0m[1mcall to undeclared function 'trim'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   95 |         [0;34mchar[0m *line = trim(buf);[0m
+      | [0;1;32m                     ^
+[0m[1mbanker.c:95:15: [0m[0;1;31merror: [0m[1mincompatible integer to pointer conversion initializing 'char *' with an expression of type 'int' [-Wint-conversion][0m
+   95 |         [0;34mchar[0m *line = trim(buf);[0m
+      | [0;1;32m              ^      ~~~~~~~~~
+[0m[1mbanker.c:108:17: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  108 |                 fatal([0;32m"Linha %d do %s: o comando '*' não recebe argumentos\n"[0m, line_no, COMMANDS_FILE);[0m
+      | [0;1;32m                ^
+[0m[1mbanker.c:116:17: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  116 |                 fatal([0;32m"A linha %d do %s tem %d recursos, mas foram passados %d argumentos\n"[0m, line_no, COMMANDS_FILE, nt - [0;32m2[0m < [0;32m0[0m ? [0;32m0[0m : nt - [0;32m2[0m, n_resources);[0m
+      | [0;1;32m                ^
+[0m[1mbanker.c:119:18: [0m[0;1;31merror: [0m[1mcall to undeclared function 'parse_nonneg_int'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  119 |             [0;34mif[0m (!parse_nonneg_int(tokens[[0;32m1[0m], &cmd.customer)){[0m
+      | [0;1;32m                 ^
+[0m[1mbanker.c:121:17: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  121 |                 fatal([0;32m"Linha %d do %s: número de cliente inválido '%s'"[0m, line_no, COMMANDS_FILE, tokens[[0;32m1[0m]);[0m
+      | [0;1;32m                ^
+[0m[1mbanker.c:126:17: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  126 |                 fatal([0;32m"Linha %d do %s: o cliente %d não existe (validos: 0 a %d)"[0m, line_no, COMMANDS_FILE, cmd.customer, n_customers - [0;32m1[0m);[0m
+      | [0;1;32m                ^
+[0m[1mbanker.c:128:26: [0m[0;1;31merror: [0m[1mcall to undeclared function 'xmalloc'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  128 |             cmd.values = xmalloc((size_t)n_resources * [0;34msizeof[0m([0;34mint[0m));[0m
       | [0;1;32m                         ^
-[0m1 warning generated.
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004hmmake banker      .\ /banker 10 5 7[?2004l
-Makefile:18: warning: overriding commands for target `banker'
-Makefile:8: warning: ignoring old commands for target `banker'
-Makefile:21: warning: overriding commands for target `clean'
-Makefile:11: warning: ignoring old commands for target `clean'
-make: `banker' is up to date.
-make: *** No rule to make target `10'.  Stop.
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004hmmake[?2004l
-Makefile:18: warning: overriding commands for target `banker'
-Makefile:8: warning: ignoring old commands for target `banker'
-Makefile:21: warning: overriding commands for target `clean'
-Makefile:11: warning: ignoring old commands for target `clean'
-make: Nothing to be done for `all'.
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004h[7m./banker 10 5 7[27m[15D[27m.[27m/[27mb[27ma[27mn[27mk[27me[27mr[27m [27m1[27m0[27m [27m5[27m [27m7[?2004l
+[0m[0;1;31mfatal error: [0m[1mtoo many errors emitted, stopping now [-ferror-limit=][0m
+20 errors generated.
+make: *** [banker] Error 1
 Deu certo!! Recebi 3 argumentos
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004h[7m./banker 10 5 7[27m[15D[27m.[27m/[27mb[27ma[27mn[27mk[27me[27mr[27m [27m1[27m0[27m [27m5[27m [27m7 7 a 7b 7c 7[1C[1C[?2004l
-Deu certo!! Recebi 3 argumentos
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004h../banker[?2004l
-Deu certo!! Recebi 0 argumentos
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004hmmaximun[?2004l
-zsh: command not found: maximun
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004hmmake maximun m[?2004l
+[1m[7m%[27m[1m[0m                                                                                                         [0m[27m[24m[Jmarciorperez@MacBook-Air-de-Marcio mrpf % [K[?2004h[7mmake[27m
+[7m./banker 10 5 7[27m[K[A[27C[27mm[27ma[27mk[27me[1B[27m.[27m/[27mb[27ma[27mn[27mk[27me[27mr[27m [27m1[27m0[27m [27m5[27m [27m7[?2004l
 Makefile:18: warning: overriding commands for target `banker'
 Makefile:8: warning: ignoring old commands for target `banker'
 Makefile:21: warning: overriding commands for target `clean'
 Makefile:11: warning: ignoring old commands for target `clean'
-make: *** No rule to make target `maximum'.  Stop.
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004hmmaximum[?2004l
-zsh: command not found: maximum
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004h[7m./banker 10 5[27m[13D[27m.[27m/[27mb[27ma[27mn[27mk[27me[27mr[27m [27m1[27m0[27m [27m5[?2004l
+gcc -Wall -Wextra -o banker banker.c
+[1mbanker.c:29:65: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   29 |     [0;34mif[0m(len == LINE_BUF - [0;32m1[0m && buf[len - [0;32m1[0m] != [0;32m'\n'[0m && !feof(f)) fatal([0;32m"A linha %d do arquivo %s é muito longa\n"[0m, line_no, fname);[0m
+      | [0;1;32m                                                                ^
+[0m[1mbanker.c:41:12: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   41 |     [0;34mif[0m(!f) fatal([0;32m"Não foi possível abrir o arquivo %s: %s\n"[0m, CUSTOMER_FILE, strerror(errno));[0m
+      | [0;1;32m           ^
+[0m[1mbanker.c:48:22: [0m[0;1;31merror: [0m[1mcall to undeclared function 'trim'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   48 |         [0;34mchar[0m *line = trim(buf);[0m
+      | [0;1;32m                     ^
+[0m[1mbanker.c:48:15: [0m[0;1;31merror: [0m[1mincompatible integer to pointer conversion initializing 'char *' with an expression of type 'int' [-Wint-conversion][0m
+   48 |         [0;34mchar[0m *line = trim(buf);[0m
+      | [0;1;32m              ^      ~~~~~~~~~
+[0m[1mbanker.c:61:23: [0m[0;1;31merror: [0m[1mcall to undeclared function 'xrealloc'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   61 |             maximun = xrealloc(maximun, (size_t)cap * [0;34msizeof[0m([0;34mint[0m *));[0m
+      | [0;1;32m                      ^
+[0m[1mbanker.c:61:23: [0m[0;1;36mnote: [0mdid you mean 'realloc'?[0m
+[1m/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/malloc/_malloc.h:57:35: [0m[0;1;36mnote: [0m'realloc' declared here[0m
+   57 | [0;34mvoid[0m * __sized_by_or_null(__size) realloc([0;34mvoid[0m * __unsafe_indexable __ptr, size_t __size) __result_use_check __alloc_size([0;32m2[0m) _MALLOC_TYPED(malloc_type_realloc, [0;32m2[0m);[0m
+      | [0;1;32m                                  ^
+[0m[1mbanker.c:61:21: [0m[0;1;31merror: [0m[1mincompatible integer to pointer conversion assigning to 'int **' from 'int' [-Wint-conversion][0m
+   61 |             maximun = xrealloc(maximun, (size_t)cap * [0;34msizeof[0m([0;34mint[0m *));[0m
+      | [0;1;32m                    ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m[1mbanker.c:63:20: [0m[0;1;31merror: [0m[1mcall to undeclared function 'xmalloc'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   63 |         [0;34mint[0m *row = xmalloc((size_t)n_resources * [0;34msizeof[0m([0;34mint[0m));[0m
+      | [0;1;32m                   ^
+[0m[1mbanker.c:63:20: [0m[0;1;36mnote: [0mdid you mean 'malloc'?[0m
+[1m/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/malloc/_malloc.h:54:35: [0m[0;1;36mnote: [0m'malloc' declared here[0m
+   54 | [0;34mvoid[0m * __sized_by_or_null(__size) malloc(size_t __size) __result_use_check __alloc_size([0;32m1[0m) _MALLOC_TYPED(malloc_type_malloc, [0;32m1[0m);[0m
+      | [0;1;32m                                  ^
+[0m[1mbanker.c:63:14: [0m[0;1;31merror: [0m[1mincompatible integer to pointer conversion initializing 'int *' with an expression of type 'int' [-Wint-conversion][0m
+   63 |         [0;34mint[0m *row = xmalloc((size_t)n_resources * [0;34msizeof[0m([0;34mint[0m));[0m
+      | [0;1;32m             ^     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m[1mbanker.c:71:19: [0m[0;1;31merror: [0m[1mincompatible integer to pointer conversion initializing 'char *' with an expression of type 'int' [-Wint-conversion][0m
+   71 |             [0;34mchar[0m *field = trim(tok);[0m
+      | [0;1;32m                  ^       ~~~~~~~~~
+[0m[1mbanker.c:72:17: [0m[0;1;31merror: [0m[1mcall to undeclared function 'parse_nonneg_int'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   72 |             [0;34mif[0m(!parse_nonneg_int(field, &row[j])){[0m
+      | [0;1;32m                ^
+[0m[1mbanker.c:88:9: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   88 |         fatal([0;32m"Não foi possível abrir o arquivo %s: %s\n"[0m, COMMANDS_FILE, strerror(errno));[0m
+      | [0;1;32m        ^
+[0m[1mbanker.c:95:22: [0m[0;1;31merror: [0m[1mcall to undeclared function 'trim'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   95 |         [0;34mchar[0m *line = trim(buf);[0m
+      | [0;1;32m                     ^
+[0m[1mbanker.c:95:15: [0m[0;1;31merror: [0m[1mincompatible integer to pointer conversion initializing 'char *' with an expression of type 'int' [-Wint-conversion][0m
+   95 |         [0;34mchar[0m *line = trim(buf);[0m
+      | [0;1;32m              ^      ~~~~~~~~~
+[0m[1mbanker.c:108:17: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  108 |                 fatal([0;32m"Linha %d do %s: o comando '*' não recebe argumentos\n"[0m, line_no, COMMANDS_FILE);[0m
+      | [0;1;32m                ^
+[0m[1mbanker.c:116:17: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  116 |                 fatal([0;32m"A linha %d do %s tem %d recursos, mas foram passados %d argumentos\n"[0m, line_no, COMMANDS_FILE, nt - [0;32m2[0m < [0;32m0[0m ? [0;32m0[0m : nt - [0;32m2[0m, n_resources);[0m
+      | [0;1;32m                ^
+[0m[1mbanker.c:119:18: [0m[0;1;31merror: [0m[1mcall to undeclared function 'parse_nonneg_int'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  119 |             [0;34mif[0m (!parse_nonneg_int(tokens[[0;32m1[0m], &cmd.customer)){[0m
+      | [0;1;32m                 ^
+[0m[1mbanker.c:121:17: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  121 |                 fatal([0;32m"Linha %d do %s: número de cliente inválido '%s'"[0m, line_no, COMMANDS_FILE, tokens[[0;32m1[0m]);[0m
+      | [0;1;32m                ^
+[0m[1mbanker.c:126:17: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  126 |                 fatal([0;32m"Linha %d do %s: o cliente %d não existe (validos: 0 a %d)"[0m, line_no, COMMANDS_FILE, cmd.customer, n_customers - [0;32m1[0m);[0m
+      | [0;1;32m                ^
+[0m[1mbanker.c:128:26: [0m[0;1;31merror: [0m[1mcall to undeclared function 'xmalloc'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  128 |             cmd.values = xmalloc((size_t)n_resources * [0;34msizeof[0m([0;34mint[0m));[0m
+      | [0;1;32m                         ^
+[0m[0;1;31mfatal error: [0m[1mtoo many errors emitted, stopping now [-ferror-limit=][0m
+20 errors generated.
+make: *** [banker] Error 1
+Deu certo!! Recebi 3 argumentos
+[1m[7m%[27m[1m[0m                                                                                                         [0m[27m[24m[Jmarciorperez@MacBook-Air-de-Marcio mrpf % [K[?2004hmake
+./banker 10 5 7[K 7 a 7b 7c 7[?2004l
+Makefile:18: warning: overriding commands for target `banker'
+Makefile:8: warning: ignoring old commands for target `banker'
+Makefile:21: warning: overriding commands for target `clean'
+Makefile:11: warning: ignoring old commands for target `clean'
+gcc -Wall -Wextra -o banker banker.c
+[1mbanker.c:29:65: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   29 |     [0;34mif[0m(len == LINE_BUF - [0;32m1[0m && buf[len - [0;32m1[0m] != [0;32m'\n'[0m && !feof(f)) fatal([0;32m"A linha %d do arquivo %s é muito longa\n"[0m, line_no, fname);[0m
+      | [0;1;32m                                                                ^
+[0m[1mbanker.c:41:12: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   41 |     [0;34mif[0m(!f) fatal([0;32m"Não foi possível abrir o arquivo %s: %s\n"[0m, CUSTOMER_FILE, strerror(errno));[0m
+      | [0;1;32m           ^
+[0m[1mbanker.c:48:22: [0m[0;1;31merror: [0m[1mcall to undeclared function 'trim'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   48 |         [0;34mchar[0m *line = trim(buf);[0m
+      | [0;1;32m                     ^
+[0m[1mbanker.c:48:15: [0m[0;1;31merror: [0m[1mincompatible integer to pointer conversion initializing 'char *' with an expression of type 'int' [-Wint-conversion][0m
+   48 |         [0;34mchar[0m *line = trim(buf);[0m
+      | [0;1;32m              ^      ~~~~~~~~~
+[0m[1mbanker.c:61:23: [0m[0;1;31merror: [0m[1mcall to undeclared function 'xrealloc'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   61 |             maximun = xrealloc(maximun, (size_t)cap * [0;34msizeof[0m([0;34mint[0m *));[0m
+      | [0;1;32m                      ^
+[0m[1mbanker.c:61:23: [0m[0;1;36mnote: [0mdid you mean 'realloc'?[0m
+[1m/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/malloc/_malloc.h:57:35: [0m[0;1;36mnote: [0m'realloc' declared here[0m
+   57 | [0;34mvoid[0m * __sized_by_or_null(__size) realloc([0;34mvoid[0m * __unsafe_indexable __ptr, size_t __size) __result_use_check __alloc_size([0;32m2[0m) _MALLOC_TYPED(malloc_type_realloc, [0;32m2[0m);[0m
+      | [0;1;32m                                  ^
+[0m[1mbanker.c:61:21: [0m[0;1;31merror: [0m[1mincompatible integer to pointer conversion assigning to 'int **' from 'int' [-Wint-conversion][0m
+   61 |             maximun = xrealloc(maximun, (size_t)cap * [0;34msizeof[0m([0;34mint[0m *));[0m
+      | [0;1;32m                    ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m[1mbanker.c:63:20: [0m[0;1;31merror: [0m[1mcall to undeclared function 'xmalloc'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   63 |         [0;34mint[0m *row = xmalloc((size_t)n_resources * [0;34msizeof[0m([0;34mint[0m));[0m
+      | [0;1;32m                   ^
+[0m[1mbanker.c:63:20: [0m[0;1;36mnote: [0mdid you mean 'malloc'?[0m
+[1m/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/malloc/_malloc.h:54:35: [0m[0;1;36mnote: [0m'malloc' declared here[0m
+   54 | [0;34mvoid[0m * __sized_by_or_null(__size) malloc(size_t __size) __result_use_check __alloc_size([0;32m1[0m) _MALLOC_TYPED(malloc_type_malloc, [0;32m1[0m);[0m
+      | [0;1;32m                                  ^
+[0m[1mbanker.c:63:14: [0m[0;1;31merror: [0m[1mincompatible integer to pointer conversion initializing 'int *' with an expression of type 'int' [-Wint-conversion][0m
+   63 |         [0;34mint[0m *row = xmalloc((size_t)n_resources * [0;34msizeof[0m([0;34mint[0m));[0m
+      | [0;1;32m             ^     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m[1mbanker.c:71:19: [0m[0;1;31merror: [0m[1mincompatible integer to pointer conversion initializing 'char *' with an expression of type 'int' [-Wint-conversion][0m
+   71 |             [0;34mchar[0m *field = trim(tok);[0m
+      | [0;1;32m                  ^       ~~~~~~~~~
+[0m[1mbanker.c:72:17: [0m[0;1;31merror: [0m[1mcall to undeclared function 'parse_nonneg_int'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   72 |             [0;34mif[0m(!parse_nonneg_int(field, &row[j])){[0m
+      | [0;1;32m                ^
+[0m[1mbanker.c:88:9: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   88 |         fatal([0;32m"Não foi possível abrir o arquivo %s: %s\n"[0m, COMMANDS_FILE, strerror(errno));[0m
+      | [0;1;32m        ^
+[0m[1mbanker.c:95:22: [0m[0;1;31merror: [0m[1mcall to undeclared function 'trim'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   95 |         [0;34mchar[0m *line = trim(buf);[0m
+      | [0;1;32m                     ^
+[0m[1mbanker.c:95:15: [0m[0;1;31merror: [0m[1mincompatible integer to pointer conversion initializing 'char *' with an expression of type 'int' [-Wint-conversion][0m
+   95 |         [0;34mchar[0m *line = trim(buf);[0m
+      | [0;1;32m              ^      ~~~~~~~~~
+[0m[1mbanker.c:108:17: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  108 |                 fatal([0;32m"Linha %d do %s: o comando '*' não recebe argumentos\n"[0m, line_no, COMMANDS_FILE);[0m
+      | [0;1;32m                ^
+[0m[1mbanker.c:116:17: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  116 |                 fatal([0;32m"A linha %d do %s tem %d recursos, mas foram passados %d argumentos\n"[0m, line_no, COMMANDS_FILE, nt - [0;32m2[0m < [0;32m0[0m ? [0;32m0[0m : nt - [0;32m2[0m, n_resources);[0m
+      | [0;1;32m                ^
+[0m[1mbanker.c:119:18: [0m[0;1;31merror: [0m[1mcall to undeclared function 'parse_nonneg_int'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  119 |             [0;34mif[0m (!parse_nonneg_int(tokens[[0;32m1[0m], &cmd.customer)){[0m
+      | [0;1;32m                 ^
+[0m[1mbanker.c:121:17: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  121 |                 fatal([0;32m"Linha %d do %s: número de cliente inválido '%s'"[0m, line_no, COMMANDS_FILE, tokens[[0;32m1[0m]);[0m
+      | [0;1;32m                ^
+[0m[1mbanker.c:126:17: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  126 |                 fatal([0;32m"Linha %d do %s: o cliente %d não existe (validos: 0 a %d)"[0m, line_no, COMMANDS_FILE, cmd.customer, n_customers - [0;32m1[0m);[0m
+      | [0;1;32m                ^
+[0m[1mbanker.c:128:26: [0m[0;1;31merror: [0m[1mcall to undeclared function 'xmalloc'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  128 |             cmd.values = xmalloc((size_t)n_resources * [0;34msizeof[0m([0;34mint[0m));[0m
+      | [0;1;32m                         ^
+[0m[0;1;31mfatal error: [0m[1mtoo many errors emitted, stopping now [-ferror-limit=][0m
+20 errors generated.
+make: *** [banker] Error 1
+Deu certo!! Recebi 3 argumentos
+[1m[7m%[27m[1m[0m                                                                                                         [0m[27m[24m[Jmarciorperez@MacBook-Air-de-Marcio mrpf % [K[?2004hmake
+./banker 10 abc 7[K[K5 [?2004l
+Makefile:18: warning: overriding commands for target `banker'
+Makefile:8: warning: ignoring old commands for target `banker'
+Makefile:21: warning: overriding commands for target `clean'
+Makefile:11: warning: ignoring old commands for target `clean'
+gcc -Wall -Wextra -o banker banker.c
+[1mbanker.c:29:65: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   29 |     [0;34mif[0m(len == LINE_BUF - [0;32m1[0m && buf[len - [0;32m1[0m] != [0;32m'\n'[0m && !feof(f)) fatal([0;32m"A linha %d do arquivo %s é muito longa\n"[0m, line_no, fname);[0m
+      | [0;1;32m                                                                ^
+[0m[1mbanker.c:41:12: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   41 |     [0;34mif[0m(!f) fatal([0;32m"Não foi possível abrir o arquivo %s: %s\n"[0m, CUSTOMER_FILE, strerror(errno));[0m
+      | [0;1;32m           ^
+[0m[1mbanker.c:48:22: [0m[0;1;31merror: [0m[1mcall to undeclared function 'trim'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   48 |         [0;34mchar[0m *line = trim(buf);[0m
+      | [0;1;32m                     ^
+[0m[1mbanker.c:48:15: [0m[0;1;31merror: [0m[1mincompatible integer to pointer conversion initializing 'char *' with an expression of type 'int' [-Wint-conversion][0m
+   48 |         [0;34mchar[0m *line = trim(buf);[0m
+      | [0;1;32m              ^      ~~~~~~~~~
+[0m[1mbanker.c:61:23: [0m[0;1;31merror: [0m[1mcall to undeclared function 'xrealloc'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   61 |             maximun = xrealloc(maximun, (size_t)cap * [0;34msizeof[0m([0;34mint[0m *));[0m
+      | [0;1;32m                      ^
+[0m[1mbanker.c:61:23: [0m[0;1;36mnote: [0mdid you mean 'realloc'?[0m
+[1m/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/malloc/_malloc.h:57:35: [0m[0;1;36mnote: [0m'realloc' declared here[0m
+   57 | [0;34mvoid[0m * __sized_by_or_null(__size) realloc([0;34mvoid[0m * __unsafe_indexable __ptr, size_t __size) __result_use_check __alloc_size([0;32m2[0m) _MALLOC_TYPED(malloc_type_realloc, [0;32m2[0m);[0m
+      | [0;1;32m                                  ^
+[0m[1mbanker.c:61:21: [0m[0;1;31merror: [0m[1mincompatible integer to pointer conversion assigning to 'int **' from 'int' [-Wint-conversion][0m
+   61 |             maximun = xrealloc(maximun, (size_t)cap * [0;34msizeof[0m([0;34mint[0m *));[0m
+      | [0;1;32m                    ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m[1mbanker.c:63:20: [0m[0;1;31merror: [0m[1mcall to undeclared function 'xmalloc'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   63 |         [0;34mint[0m *row = xmalloc((size_t)n_resources * [0;34msizeof[0m([0;34mint[0m));[0m
+      | [0;1;32m                   ^
+[0m[1mbanker.c:63:20: [0m[0;1;36mnote: [0mdid you mean 'malloc'?[0m
+[1m/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/malloc/_malloc.h:54:35: [0m[0;1;36mnote: [0m'malloc' declared here[0m
+   54 | [0;34mvoid[0m * __sized_by_or_null(__size) malloc(size_t __size) __result_use_check __alloc_size([0;32m1[0m) _MALLOC_TYPED(malloc_type_malloc, [0;32m1[0m);[0m
+      | [0;1;32m                                  ^
+[0m[1mbanker.c:63:14: [0m[0;1;31merror: [0m[1mincompatible integer to pointer conversion initializing 'int *' with an expression of type 'int' [-Wint-conversion][0m
+   63 |         [0;34mint[0m *row = xmalloc((size_t)n_resources * [0;34msizeof[0m([0;34mint[0m));[0m
+      | [0;1;32m             ^     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m[1mbanker.c:71:19: [0m[0;1;31merror: [0m[1mincompatible integer to pointer conversion initializing 'char *' with an expression of type 'int' [-Wint-conversion][0m
+   71 |             [0;34mchar[0m *field = trim(tok);[0m
+      | [0;1;32m                  ^       ~~~~~~~~~
+[0m[1mbanker.c:72:17: [0m[0;1;31merror: [0m[1mcall to undeclared function 'parse_nonneg_int'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   72 |             [0;34mif[0m(!parse_nonneg_int(field, &row[j])){[0m
+      | [0;1;32m                ^
+[0m[1mbanker.c:88:9: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   88 |         fatal([0;32m"Não foi possível abrir o arquivo %s: %s\n"[0m, COMMANDS_FILE, strerror(errno));[0m
+      | [0;1;32m        ^
+[0m[1mbanker.c:95:22: [0m[0;1;31merror: [0m[1mcall to undeclared function 'trim'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   95 |         [0;34mchar[0m *line = trim(buf);[0m
+      | [0;1;32m                     ^
+[0m[1mbanker.c:95:15: [0m[0;1;31merror: [0m[1mincompatible integer to pointer conversion initializing 'char *' with an expression of type 'int' [-Wint-conversion][0m
+   95 |         [0;34mchar[0m *line = trim(buf);[0m
+      | [0;1;32m              ^      ~~~~~~~~~
+[0m[1mbanker.c:108:17: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  108 |                 fatal([0;32m"Linha %d do %s: o comando '*' não recebe argumentos\n"[0m, line_no, COMMANDS_FILE);[0m
+      | [0;1;32m                ^
+[0m[1mbanker.c:116:17: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  116 |                 fatal([0;32m"A linha %d do %s tem %d recursos, mas foram passados %d argumentos\n"[0m, line_no, COMMANDS_FILE, nt - [0;32m2[0m < [0;32m0[0m ? [0;32m0[0m : nt - [0;32m2[0m, n_resources);[0m
+      | [0;1;32m                ^
+[0m[1mbanker.c:119:18: [0m[0;1;31merror: [0m[1mcall to undeclared function 'parse_nonneg_int'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  119 |             [0;34mif[0m (!parse_nonneg_int(tokens[[0;32m1[0m], &cmd.customer)){[0m
+      | [0;1;32m                 ^
+[0m[1mbanker.c:121:17: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  121 |                 fatal([0;32m"Linha %d do %s: número de cliente inválido '%s'"[0m, line_no, COMMANDS_FILE, tokens[[0;32m1[0m]);[0m
+      | [0;1;32m                ^
+[0m[1mbanker.c:126:17: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  126 |                 fatal([0;32m"Linha %d do %s: o cliente %d não existe (validos: 0 a %d)"[0m, line_no, COMMANDS_FILE, cmd.customer, n_customers - [0;32m1[0m);[0m
+      | [0;1;32m                ^
+[0m[1mbanker.c:128:26: [0m[0;1;31merror: [0m[1mcall to undeclared function 'xmalloc'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  128 |             cmd.values = xmalloc((size_t)n_resources * [0;34msizeof[0m([0;34mint[0m));[0m
+      | [0;1;32m                         ^
+[0m[0;1;31mfatal error: [0m[1mtoo many errors emitted, stopping now [-ferror-limit=][0m
+20 errors generated.
+make: *** [banker] Error 1
 Deu certo!! Recebi 2 argumentos
-[1m[7m%[27m[1m[0m                                                                                                                                                                                                   [0m[27m[24m[Jmarciorperez@192 mrpf % [K[?2004h
+[1m[7m%[27m[1m[0m                                                                                                         [0m[27m[24m[Jmarciorperez@MacBook-Air-de-Marcio mrpf % [K[?2004hmake
+./banker 10 abc[K[1C   [?2004l
+Makefile:18: warning: overriding commands for target `banker'
+Makefile:8: warning: ignoring old commands for target `banker'
+Makefile:21: warning: overriding commands for target `clean'
+Makefile:11: warning: ignoring old commands for target `clean'
+gcc -Wall -Wextra -o banker banker.c
+[1mbanker.c:29:65: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   29 |     [0;34mif[0m(len == LINE_BUF - [0;32m1[0m && buf[len - [0;32m1[0m] != [0;32m'\n'[0m && !feof(f)) fatal([0;32m"A linha %d do arquivo %s é muito longa\n"[0m, line_no, fname);[0m
+      | [0;1;32m                                                                ^
+[0m[1mbanker.c:41:12: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   41 |     [0;34mif[0m(!f) fatal([0;32m"Não foi possível abrir o arquivo %s: %s\n"[0m, CUSTOMER_FILE, strerror(errno));[0m
+      | [0;1;32m           ^
+[0m[1mbanker.c:48:22: [0m[0;1;31merror: [0m[1mcall to undeclared function 'trim'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   48 |         [0;34mchar[0m *line = trim(buf);[0m
+      | [0;1;32m                     ^
+[0m[1mbanker.c:48:15: [0m[0;1;31merror: [0m[1mincompatible integer to pointer conversion initializing 'char *' with an expression of type 'int' [-Wint-conversion][0m
+   48 |         [0;34mchar[0m *line = trim(buf);[0m
+      | [0;1;32m              ^      ~~~~~~~~~
+[0m[1mbanker.c:61:23: [0m[0;1;31merror: [0m[1mcall to undeclared function 'xrealloc'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   61 |             maximun = xrealloc(maximun, (size_t)cap * [0;34msizeof[0m([0;34mint[0m *));[0m
+      | [0;1;32m                      ^
+[0m[1mbanker.c:61:23: [0m[0;1;36mnote: [0mdid you mean 'realloc'?[0m
+[1m/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/malloc/_malloc.h:57:35: [0m[0;1;36mnote: [0m'realloc' declared here[0m
+   57 | [0;34mvoid[0m * __sized_by_or_null(__size) realloc([0;34mvoid[0m * __unsafe_indexable __ptr, size_t __size) __result_use_check __alloc_size([0;32m2[0m) _MALLOC_TYPED(malloc_type_realloc, [0;32m2[0m);[0m
+      | [0;1;32m                                  ^
+[0m[1mbanker.c:61:21: [0m[0;1;31merror: [0m[1mincompatible integer to pointer conversion assigning to 'int **' from 'int' [-Wint-conversion][0m
+   61 |             maximun = xrealloc(maximun, (size_t)cap * [0;34msizeof[0m([0;34mint[0m *));[0m
+      | [0;1;32m                    ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m[1mbanker.c:63:20: [0m[0;1;31merror: [0m[1mcall to undeclared function 'xmalloc'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   63 |         [0;34mint[0m *row = xmalloc((size_t)n_resources * [0;34msizeof[0m([0;34mint[0m));[0m
+      | [0;1;32m                   ^
+[0m[1mbanker.c:63:20: [0m[0;1;36mnote: [0mdid you mean 'malloc'?[0m
+[1m/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/malloc/_malloc.h:54:35: [0m[0;1;36mnote: [0m'malloc' declared here[0m
+   54 | [0;34mvoid[0m * __sized_by_or_null(__size) malloc(size_t __size) __result_use_check __alloc_size([0;32m1[0m) _MALLOC_TYPED(malloc_type_malloc, [0;32m1[0m);[0m
+      | [0;1;32m                                  ^
+[0m[1mbanker.c:63:14: [0m[0;1;31merror: [0m[1mincompatible integer to pointer conversion initializing 'int *' with an expression of type 'int' [-Wint-conversion][0m
+   63 |         [0;34mint[0m *row = xmalloc((size_t)n_resources * [0;34msizeof[0m([0;34mint[0m));[0m
+      | [0;1;32m             ^     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m[1mbanker.c:71:19: [0m[0;1;31merror: [0m[1mincompatible integer to pointer conversion initializing 'char *' with an expression of type 'int' [-Wint-conversion][0m
+   71 |             [0;34mchar[0m *field = trim(tok);[0m
+      | [0;1;32m                  ^       ~~~~~~~~~
+[0m[1mbanker.c:72:17: [0m[0;1;31merror: [0m[1mcall to undeclared function 'parse_nonneg_int'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   72 |             [0;34mif[0m(!parse_nonneg_int(field, &row[j])){[0m
+      | [0;1;32m                ^
+[0m[1mbanker.c:88:9: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   88 |         fatal([0;32m"Não foi possível abrir o arquivo %s: %s\n"[0m, COMMANDS_FILE, strerror(errno));[0m
+      | [0;1;32m        ^
+[0m[1mbanker.c:95:22: [0m[0;1;31merror: [0m[1mcall to undeclared function 'trim'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+   95 |         [0;34mchar[0m *line = trim(buf);[0m
+      | [0;1;32m                     ^
+[0m[1mbanker.c:95:15: [0m[0;1;31merror: [0m[1mincompatible integer to pointer conversion initializing 'char *' with an expression of type 'int' [-Wint-conversion][0m
+   95 |         [0;34mchar[0m *line = trim(buf);[0m
+      | [0;1;32m              ^      ~~~~~~~~~
+[0m[1mbanker.c:108:17: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  108 |                 fatal([0;32m"Linha %d do %s: o comando '*' não recebe argumentos\n"[0m, line_no, COMMANDS_FILE);[0m
+      | [0;1;32m                ^
+[0m[1mbanker.c:116:17: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  116 |                 fatal([0;32m"A linha %d do %s tem %d recursos, mas foram passados %d argumentos\n"[0m, line_no, COMMANDS_FILE, nt - [0;32m2[0m < [0;32m0[0m ? [0;32m0[0m : nt - [0;32m2[0m, n_resources);[0m
+      | [0;1;32m                ^
+[0m[1mbanker.c:119:18: [0m[0;1;31merror: [0m[1mcall to undeclared function 'parse_nonneg_int'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  119 |             [0;34mif[0m (!parse_nonneg_int(tokens[[0;32m1[0m], &cmd.customer)){[0m
+      | [0;1;32m                 ^
+[0m[1mbanker.c:121:17: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  121 |                 fatal([0;32m"Linha %d do %s: número de cliente inválido '%s'"[0m, line_no, COMMANDS_FILE, tokens[[0;32m1[0m]);[0m
+      | [0;1;32m                ^
+[0m[1mbanker.c:126:17: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fatal'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  126 |                 fatal([0;32m"Linha %d do %s: o cliente %d não existe (validos: 0 a %d)"[0m, line_no, COMMANDS_FILE, cmd.customer, n_customers - [0;32m1[0m);[0m
+      | [0;1;32m                ^
+[0m[1mbanker.c:128:26: [0m[0;1;31merror: [0m[1mcall to undeclared function 'xmalloc'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+  128 |             cmd.values = xmalloc((size_t)n_resources * [0;34msizeof[0m([0;34mint[0m));[0m
+      | [0;1;32m                         ^
+[0m[0;1;31mfatal error: [0m[1mtoo many errors emitted, stopping now [-ferror-limit=][0m
+20 errors generated.
+make: *** [banker] Error 1
+Deu certo!! Recebi 1 argumentos
+[1m[7m%[27m[1m[0m                                                                                                         [0m[27m[24m[Jmarciorperez@MacBook-Air-de-Marcio mrpf % [K[?2004h
