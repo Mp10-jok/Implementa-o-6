@@ -1,7 +1,7 @@
-all:
-	$(MAKE) -C mrpf
-	cp mrpf/banker banker
+all: banker
+
+banker: mrpf/banker.c
+	gcc -Wall -Wextra -o banker mrpf/banker.c
 
 clean:
-	$(MAKE) -C mrpf clean
-	rm -f banker result.txt
+	rm -f banker result.txt mrpf/banker mrpf/result.txt
