@@ -3,6 +3,8 @@
 #include <string.h>
 #include <ctype.h>
 #include <errno.h>
+#include <limits.h>
+#include <stdarg.h>
 
 #define CUSTOMER_FILE "customer.txt"
 #define COMMANDS_FILE "commands.txt"
@@ -17,15 +19,75 @@ typedef struct {
     int *values;        
 } Command;
 
-static int n_resources = 0;
 static int n_customers = 0;
+static int n_resources = 0;
 static int *available = NULL;
-static int **maximun = NULL;
+static int **maximum = NULL;
 static int **allocation = NULL;
 static int **need = NULL;
 static Command *commands = NULL;
 static int n_commands = 0;
 static FILE *result = NULL;
+
+static void free_matrix(int **m, int rows){
+    if(!m) return;
+    for(int i = 0; i < rows; i++) free(m[i]);
+    free(m);
+}
+
+static void cleanup(void){
+    free(available);
+    free_matrix(maximum, n_customers);
+    free_matrix(allocation, n_customers);
+    free_matrix(need, n_customers);
+    for(int i = 0; i < n_commands; i++) free(commands[i].values);
+    free(commands);
+    if (result) fclose(result);
+}
+
+static void fatal(const char *fmt, ...) __attribute__((format(printf, 1, 2), noreturn));
+
+static void fatal(const char *fmt, ...){
+    va_list ap;
+    va_start(ap, fmt);
+    fprintf(stderr, "Erro: ");
+    vfprintf(stderr, fmt, ap);
+    fprintf(stderr, "\n");
+    va_end(ap);
+    exit(EXIT_FAILURE);
+}
+
+static void *xmalloc(size_t size){
+    void *p = calloc(1, size ? size : 1);
+    if(!p) fatal("memória insuficiente");
+    return p;
+}
+
+static void *xrealloc(void *ptr, size_t size){
+    void *p = realloc(ptr, size);
+    if(!p) fatal("memória insuficiente");
+    return p;
+}
+
+static char *trim(char *s){
+    while(isspace((unsigned char)*s)) s++;
+    char *end = s + strlen(s);
+    while(end > s && isspace((unsigned char)end[-1])) end--;
+    *end = '\0';
+    return s;
+}
+
+static int parse_nonneg_int(const char *s, int *out){
+    if(!s || *s == '\0') return 0;
+    for(const char *p = s; *p; p++){
+        if (!isdigit((unsigned char)*p)) return 0;
+    }    
+    errno = 0;
+    long v = strtol(s, NULL, 10);
+    if(errno == ERANGE || v > INT_MAX) return 0;
+    *out = (int)v;
+    return 1;
+}
 
 static int read_line(FILE *f, char *buf, const char *fname, int line_no){
     if(!fgets(buf, LINE_BUF, f)) return 0;
@@ -34,9 +96,9 @@ static int read_line(FILE *f, char *buf, const char *fname, int line_no){
     return 1;
 }
 
-static void fprintf_vec(FILE *f, const int *v){
+static void fprint_vec(FILE *f, const int *v){
     for(int j = 0; j < n_resources; j++){
-        fprintf(f, j ? "%d" : "%d", v[j]);
+        fprintf(f, j ? " %d" : "%d", v[j]);
     }
 }
 
@@ -58,14 +120,14 @@ static void load_customers(void){
         }
         if(fields != n_resources){
             fclose(f);
-            fatal("A linha %d do %s tem %d recursos, mas foram passados %d argumentos\n", CUSTOMER_FILE, line_no, fields, n_resources);
+            fatal("A linha %d do %s tem %d recursos, mas foram passados %d argumentos", line_no, CUSTOMER_FILE, fields, n_resources);
         }
         if(n_customers == cap){
             cap = cap ? cap * 2 : 8;
-            maximun = xrealloc(maximun, (size_t)cap * sizeof(int *));
+            maximum = xrealloc(maximum, (size_t)cap * sizeof(int *));
         }
         int *row = xmalloc((size_t)n_resources * sizeof(int));
-        maximun[n_customers] = row;
+        maximum[n_customers] = row;
         n_customers++;
 
         char *tok = line;
@@ -101,7 +163,7 @@ static void load_commands(void){
 
         char *tokens[LINE_BUF / 2] = {0};
         int nt = 0;
-        for(char *t = strtok(line, "\t"); t; t = strtok(NULL, "\t")){
+        for(char *t = strtok(line, " \t"); t; t = strtok(NULL, " \t")){
             tokens[nt++] = t;
         }
 
@@ -196,17 +258,17 @@ static int is_safe(void) {
 static void request_resources(int c, const int *req){
     for(int j = 0; j < n_resources; j++){
         if(req[j] > need[c][j]){
-            fprintf(result, "O pedido %d do cliente ", c);
+            fprintf(result, "The customer %d request ", c);
             fprint_vec(result, req);
-            fprintf(result, " foi negado porque excede sua alocação máxima\n");
+            fprintf(result, " was denied because exceed its maximum allocation\n");
             return;
         }
     }
     for(int j = 0; j < n_resources; j++){
         if(req[j] > available[j]){
-            fprintf(result, "Os recursos ");
+            fprintf(result, "The resources ");
             fprint_vec(result, available);
-            fprintf(result, " não são suficientes para a solicitação %d do cliente ", c);
+            fprintf(result, " are not enough to customer %d request ", c);
             fprint_vec(result, req);
             fprintf(result, "\n");
             return;
@@ -225,13 +287,13 @@ static void request_resources(int c, const int *req){
             allocation[c][j] -= req[j];
             need[c][j] += req[j];
         }
-        fprintf(result, "O pedido %d do cliente ", c);
+        fprintf(result, "The customer %d request ", c);
         fprint_vec(result, req);
-        fprintf(result, " foi negado porque resulta em um estado inseguro\n");
+        fprintf(result, " was denied because result in an unsafe state\n");
         return;
     }
 
-    fprintf(result, "Alocar ao cliente %d os recursos ", c);
+    fprintf(result, "Allocate to customer %d the resources ", c);
     fprint_vec(result, req);
     fprintf(result, "\n");
 }
@@ -250,7 +312,7 @@ static void release_resources(int c, const int *rel){
         allocation[c][j] -= rel[j];
         need[c][j] += rel[j];
     }
-    fprintf(result, "O cliente %d teve seus recursos liberados ", c);
+    fprintf(result, "Release from customer %d the resources ", c);
     fprint_vec(result, rel);
     fprintf(result, "\n");
 }
